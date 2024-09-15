@@ -1,0 +1,33 @@
+<p-toolbar styleClass="bg-indigo-800">
+  <div class="p-toolgroup-start">
+    <p-button
+      icon="pi pi-home"
+      label="Dashboard"
+      routerLink="/dashboard"
+      styleClass="bg-indigo-800 p-button-secundary"
+      routerLinkActive="exact_route"></p-button>
+
+  </div>
+
+  <div class="p-toolbar-group-center">
+
+    <p-button
+      label="Usuarios"
+      icon="pi pi-cart-plus"
+      routerLink="/usuarios"
+      styleClass="bg-indigo-800 p-button-secondary"
+      routerLinkActive="exact_route"
+      class="mr-2"
+    ></p-button>
+
+  </div>
+
+  <div class="p-toolbar-group-end">
+    <p-button
+      icon="pi pi-sign-out"
+      label="Sair"
+      styleClass="p-button-danger"
+      (onClick)="handleLogout()"
+    ></p-button>
+  </div>
+</p-toolbar>
