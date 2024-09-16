@@ -29,7 +29,6 @@ export class UsuariosFormComponent implements OnInit, OnDestroy {
   };
 
   public productSelectedDatas!: SingupUserResponse;
-  public perfil!: PerfilResponse;
 
   public editUsuarioForm = this.formBuilder.group({
     nome: ['', Validators.required],
@@ -48,7 +47,6 @@ export class UsuariosFormComponent implements OnInit, OnDestroy {
     public ref: DynamicDialogConfig,
     private usuarioservice: UserService,
     private cookie: CookieService,
-    private perfilService: PerfilService
   ) {}
 
 
@@ -61,8 +59,6 @@ export class UsuariosFormComponent implements OnInit, OnDestroy {
     ) {
       this.getUsuarioSelectedDatas(this.usuarioAction?.event?.id as string);
     }
-
-    this.getPerfil();
   }
 
   getUsuarioSelectedDatas(usuarioId: string): void {
@@ -127,28 +123,8 @@ export class UsuariosFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPerfil(): void{
-    const codPerfil = this.cookie.get('USER_PERFIL');
-
-    this.perfilService
-        .buscarPerfil(codPerfil)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-            this.perfil = response;
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-
-  }
-
   validaAdmin(): boolean{
-    if(this.perfil != null &&
-      this.perfil.nome === 'admin' &&
-      this.perfil.status === '1'
-    ) {
+    if(this.cookie.get('USER_ADMIN') === 'Admin') {
       return true;
     }
 

@@ -5,7 +5,7 @@
       <input pInputText placeholder="Nome" formControlName="nome" />
       <input pInputText placeholder="Telefone" formControlName="numTelefone" />
       <input pInputText placeholder="CPF" formControlName="cpf" />
-      <input *ngIf="validaAdmin()" pInputText placeholder="Perfil" formControlName="codPerfil"/>
+      <input *ngIf="this.validaAdmin()" pInputText placeholder="Perfil" formControlName="codPerfil"/>
       <input pInputText placeholder="Preço" formControlName="username" />
       <div
         class="flex flex-row justify-content-center align-content-center align-items-center"

@@ -8,6 +8,7 @@ import { EventAction } from 'src/app/models/interfaces/user/event/EventAction';
 import { SingupUserResponse } from 'src/app/models/interfaces/user/singupUserResponse';
 import { UserService } from 'src/app/services/user/user.service';
 import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-usuarios-home',
@@ -26,6 +27,7 @@ export class UsuariosHomeComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private dialogService: DialogService,
     private usuarioService: UserService,
+    private cookie: CookieService,
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,14 @@ export class UsuariosHomeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           if(res){
-            this.usuariosDatas = res;
+            if(this.cookie.get('USER_ADMIN') === 'Admin') {
+              this.usuariosDatas = res;
+            } else {
+              this.usuariosDatas = res?.filter(
+                (element) => element?.nome === this.cookie.get('USER_INFO')
+              );
+            }
+
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',

@@ -4,6 +4,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { SingupUserResponse } from 'src/app/models/interfaces/user/singupUserResponse';
+import { CookieService } from 'ngx-cookie-service';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
+import { PerfilResponse } from 'src/app/models/interfaces/perfil/response/PerfilResponse';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -17,14 +20,18 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   public usuariosChartDatas!: ChartData;
   public usuariosChartOptions!: ChartOptions;
+  public perfil!: PerfilResponse;
 
   constructor(
     private messageService: MessageService,
     private UserService: UserService,
+    private cookie: CookieService,
+    private perfilService: PerfilService
   ) {}
 
   ngOnInit(): void {
     this.getUsuariosDatas();
+    this.getPerfil();
   }
 
   getUsuariosDatas(): void {
@@ -98,6 +105,24 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         },
       };
     }
+  }
+
+  getPerfil(): void{
+    const codPerfil = this.cookie.get('USER_PERFIL');
+
+    this.perfilService
+        .buscarPerfil(codPerfil)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            this.cookie.set('USER_ADMIN', response?.nome);
+            this.perfil = response;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+
   }
 
   ngOnDestroy(): void {
