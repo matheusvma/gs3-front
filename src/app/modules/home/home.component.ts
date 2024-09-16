@@ -52,6 +52,7 @@ export class HomeComponent implements OnDestroy{
           if(response){
             debugger;
             this.cookieService.set('USER_INFO', response?.nome);
+            this.cookieService.set('USER_PERFIL', response?.codPerfil);
             this.loginForm.reset();
             this.router.navigate(['/dashboard']);
 

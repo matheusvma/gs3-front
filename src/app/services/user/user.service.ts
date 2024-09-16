@@ -7,6 +7,7 @@ import { AuthResponse } from 'src/app/models/interfaces/user/auth/authResponse';
 import { SingupUserRequest } from 'src/app/models/interfaces/user/singupUserRequest';
 import { SingupUserResponse } from 'src/app/models/interfaces/user/singupUserResponse';
 import { environment } from 'src/environment/environment';
+import { UsuarioRequest } from 'src/app/models/interfaces/user/request/UsuarioRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -28,12 +29,6 @@ export class UserService {
     )
   }
 
-  getAllUsers(): Observable<Array<SingupUserResponse>>{
-    return this.http.get<Array<SingupUserResponse>>(
-      `${this.PAI_URL}`
-    )
-  }
-
   getAllUsuarios(): Observable<Array<SingupUserResponse>>{
     return this.http.get<Array<SingupUserResponse>>(
       `${this.PAI_URL}`
@@ -49,7 +44,14 @@ export class UserService {
 
   isLoggedIn(): boolean {
     // valida o token do usuario logado
-    const JWT_TOKEN = this.cookie.get('USER_INFO');
-    return JWT_TOKEN != null ? true : false;
+    const TOKEN = this.cookie.get('USER_INFO');
+    return TOKEN != null ? true : false;
+  }
+
+  editUsuario(request: UsuarioRequest, id: string): Observable<SingupUserResponse>{
+    return this.http.put<SingupUserResponse>(
+      `${this.PAI_URL}/atualizar/` + id,
+      request
+    )
   }
 }

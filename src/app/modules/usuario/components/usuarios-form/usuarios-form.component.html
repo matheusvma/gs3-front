@@ -1,1 +1,21 @@
-<p>usuarios-form works!</p>
+<!-- FORMULÁRIO DE EDITAR USUARIO -->
+<div *ngIf="usuarioAction?.event?.action === editUsuarioAction">
+  <form [formGroup]="editUsuarioForm" (ngSubmit)="handleSubmitEditProduct()">
+    <div class="card flex flex-column md:flex-column gap-3">
+      <input pInputText placeholder="Nome" formControlName="nome" />
+      <input pInputText placeholder="Telefone" formControlName="numTelefone" />
+      <input pInputText placeholder="CPF" formControlName="cpf" />
+      <input *ngIf="validaAdmin()" pInputText placeholder="Perfil" formControlName="codPerfil"/>
+      <input pInputText placeholder="Preço" formControlName="username" />
+      <div
+        class="flex flex-row justify-content-center align-content-center align-items-center"
+      >
+        <p-button
+          [disabled]="!editUsuarioForm.valid"
+          type="submit"
+          label="Concluir"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -44,7 +44,7 @@ export class UsuariosHomeComponent implements OnInit, OnDestroy {
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
-              detail: `Usuario criado com sucesso!`,
+              detail: `Usuários carregado com sucesso!`,
               life: 2500,
             });
           }
@@ -53,7 +53,7 @@ export class UsuariosHomeComponent implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: `Erro ao criar usuário!`,
+            detail: `Erro ao carregar usuários!`,
             life: 2500,
           });
           console.log(err);
